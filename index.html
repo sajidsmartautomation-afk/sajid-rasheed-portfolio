@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sajid Rasheed · Automation Portfolio</title>
+<meta name="description" content="Sajid Rasheed, CRM & AI Automation Specialist in Lahore. GoHighLevel, Follow Up Boss, Zapier, n8n, Make.com and AI agents.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one centered column on a faint dot-grid "workflow canvas"; every automation reads as a trigger → action → result chain */
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --sunk:#EAEEF5; --ink:#0E1B33; --muted:#56637B; --line:#D9DFEA;
+  --accent:#2A55E5; --accent-ink:#FFFFFF; --accent-soft:#E3E9FD; --trigger:#B86A0A; --trigger-soft:#FCEED8;
+  --ok:#17845A; --ok-soft:#DDF3E8;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --shadow:0 1px 2px rgba(14,27,51,.06),0 8px 24px rgba(14,27,51,.06);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1220; --surface:#121C2E; --sunk:#0F1828; --ink:#E8EDF6; --muted:#9BA7BD; --line:#24314A;
+  --accent:#7E9CFF; --accent-ink:#0B1220; --accent-soft:#1A2648; --trigger:#F1B457; --trigger-soft:#2D2416;
+  --ok:#4FCB93; --ok-soft:#14302A; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1220; --surface:#121C2E; --sunk:#0F1828; --ink:#E8EDF6; --muted:#9BA7BD; --line:#24314A;
+  --accent:#7E9CFF; --accent-ink:#0B1220; --accent-soft:#1A2648; --trigger:#F1B457; --trigger-soft:#2D2416;
+  --ok:#4FCB93; --ok-soft:#14302A; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body);
+  background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:24px 24px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1100px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.12rem;font-weight:700}
+h4{font-size:1rem;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.eyebrow{font:500 .74rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+
+/* nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font:700 1.05rem var(--display);color:var(--ink);text-decoration:none;white-space:nowrap}
+.mark{width:32px;height:32px;border-radius:8px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font:700 .85rem var(--mono)}
+.links{display:flex;gap:22px}
+.links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500}
+.links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 .93rem var(--body);border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);padding:11px 18px;border-radius:9px;cursor:pointer;text-decoration:none;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.sm{padding:8px 14px;font-size:.86rem}
+
+main{padding-block:56px 64px}
+.stack{display:flex;flex-direction:column;gap:104px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:8px;font:500 .8rem var(--mono);color:var(--ok);background:var(--ok-soft);padding:6px 12px;border-radius:999px}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.hero h1{font-size:clamp(2.4rem,6vw,4.1rem);font-weight:800;letter-spacing:-.025em;margin-top:20px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:1.12rem;color:var(--muted);max-width:34em;margin-top:20px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font:400 .84rem var(--mono);color:var(--muted)}
+
+.run{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.run-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font:500 .78rem var(--mono);color:var(--muted);gap:8px}
+.run-head .ok{color:var(--ok);white-space:nowrap}
+.run-body{padding:18px;display:flex;flex-direction:column}
+.node{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:var(--sunk)}
+.node b{font:500 .66rem var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:4px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.node.t b{background:var(--trigger-soft);color:var(--trigger)}
+.node.r b{background:var(--ok-soft);color:var(--ok)}
+.node span{font-size:.9rem;min-width:0}
+.node small{font:400 .72rem var(--mono);color:var(--muted);white-space:nowrap}
+.wire{width:2px;height:20px;background:var(--line);margin-left:28px}
+@media (prefers-reduced-motion:no-preference){
+  .wire{background:linear-gradient(var(--accent),var(--accent)) 0 -20px/2px 20px no-repeat,var(--line);animation:flow 2.4s infinite}
+  .wire.d2{animation-delay:.6s}.wire.d3{animation-delay:1.2s}
+  @keyframes flow{to{background-position:0 20px,0 0}}
+}
+
+/* strip + stats */
+.strip{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:center;align-items:center;padding:22px 0;border-block:1px solid var(--line)}
+.strip p{font:500 .74rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:100%;text-align:center}
+.strip span{font:700 1.05rem var(--display);color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.stat{background:var(--surface);padding:22px}
+.stat strong{display:block;font:800 2.1rem/1 var(--display);font-variant-numeric:tabular-nums}
+.stat small{display:block;margin-top:8px;color:var(--muted);font-size:.86rem}
+
+.sec{display:flex;flex-direction:column;gap:32px}
+.head{display:flex;flex-direction:column;gap:12px;max-width:46em}
+.head p{color:var(--muted);font-size:1.05rem}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;min-width:0}
+.svc{display:flex;flex-direction:column;gap:10px}
+.ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none}
+.svc p{color:var(--muted);font-size:.95rem}
+.svc a{font-weight:600;font-size:.9rem;text-decoration:none;margin-top:auto}
+.tags{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.tags li,.tags i{font:normal 500 .74rem var(--mono);border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}
+
+/* deep-dive platform sections */
+.platform{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.p-head{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;padding:36px;border-bottom:1px solid var(--line);align-items:start}
+.p-head h2{margin-top:12px}
+.p-head p{color:var(--muted);margin-top:14px;font-size:1.03rem}
+.who{display:flex;flex-direction:column;gap:10px;background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:18px}
+.who h4{font:500 .72rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.p-body{padding:36px;display:flex;flex-direction:column;gap:36px}
+.sub{font:500 .74rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.caps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 28px}
+.cap{display:flex;gap:12px;min-width:0}
+.cap::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;border-radius:2px;background:var(--accent)}
+.cap p{color:var(--muted);font-size:.9rem;margin-top:2px}
+.inds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ind{border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.ind p{color:var(--muted);font-size:.9rem}
+.flowrow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding-bottom:4px}
+.flowrow .node{flex:1 1 0;min-width:160px;grid-template-columns:1fr;gap:6px;align-content:start}
+.flowrow .arrow{flex:none;width:28px;display:grid;place-items:center;color:var(--muted)}
+
+/* zap / n8n recipes */
+.recipes{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.recipe{border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;background:var(--surface);min-width:0}
+.recipe .chain{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:.88rem}
+.recipe .chain span{background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:3px 9px}
+.recipe .chain span.t{background:var(--trigger-soft);border-color:transparent;color:var(--trigger);font-weight:600}
+.recipe .chain em{font-style:normal;color:var(--muted);font-family:var(--mono)}
+.recipe p{color:var(--muted);font-size:.9rem}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font:500 .85rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:7px 14px;border-radius:999px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);counter-reset:s}
+.step{padding-right:18px;position:relative;display:flex;flex-direction:column;gap:10px}
+.step::before{counter-increment:s;content:"0" counter(s);font:500 .8rem var(--mono);color:var(--accent);background:var(--surface);border:1px solid var(--accent);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;position:relative;z-index:1;flex:none}
+.step::after{content:"";position:absolute;top:20px;left:40px;right:0;height:1px;background:var(--line)}
+.step:last-child::after{display:none}
+.step p{color:var(--muted);font-size:.9rem;margin-top:4px}
+
+/* toolkit */
+.tk{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tk .card{padding:20px}
+.tk h3{font-size:.98rem;margin-bottom:12px;display:flex;justify-content:space-between;gap:8px}
+.tk h3 small{font:400 .75rem var(--mono);color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:.84rem;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+
+/* experience */
+.xp{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:start}
+.timeline{border-left:2px solid var(--line);margin-left:7px;display:flex;flex-direction:column;gap:30px}
+.job{position:relative;padding-left:26px}
+.job::before{content:"";position:absolute;left:-9px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.job.now::before{background:var(--accent)}
+.when{font:500 .8rem var(--mono);color:var(--muted)}
+.org{color:var(--accent);font-weight:600;margin-top:2px}
+.job ul{margin:10px 0 0;padding-left:18px}
+.job li+li{margin-top:6px}
+.side{display:flex;flex-direction:column;gap:16px}
+.side .card{padding:20px}
+.side h4{font:500 .72rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.side .item+.item{margin-top:12px}
+
+/* contact */
+.contact{background:var(--ink);color:var(--bg);border-radius:20px;padding:44px;display:grid;grid-template-columns:1.2fr 1fr;gap:36px;align-items:center}
+.contact h2{color:var(--bg)}
+.contact p{opacity:.78;margin-top:12px;max-width:30em}
+.contact .btn{margin-top:24px;background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.contact .btn.wa{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 45%,transparent)}
+@media (max-width:420px){nav .btn.ghost{display:none}}
+.rows{display:grid;gap:12px;font-family:var(--mono);font-size:.9rem}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid color-mix(in srgb,var(--bg) 22%,transparent);padding-bottom:12px;flex-wrap:wrap}
+.row:last-child{border:0}
+.row > span{opacity:.7}
+.row a,.row output,.row b{color:var(--bg);overflow-wrap:anywhere;font-weight:400}
+.copy{font:500 .72rem var(--mono);background:transparent;color:var(--bg);border:1px solid color-mix(in srgb,var(--bg) 45%,transparent);border-radius:6px;padding:3px 9px;cursor:pointer;margin-left:8px}
+
+footer{border-top:1px solid var(--line);padding-block:24px;font:400 .8rem var(--mono);color:var(--muted)}
+footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+@media (max-width:960px){
+  .links{display:none}
+  .hero,.contact,.xp,.p-head{grid-template-columns:1fr}
+  .caps,.inds,.tk{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:1fr;gap:20px}
+  .step{flex-direction:row;align-items:flex-start;padding:0;gap:14px}
+  .step::after{display:none}
+  .flowrow{flex-direction:column}
+  .flowrow .node{min-width:0}
+  .flowrow .arrow{width:auto;height:22px;transform:rotate(90deg)}
+}
+@media (max-width:640px){
+  .services,.caps,.inds,.tk,.recipes{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .p-head,.p-body{padding:22px}
+  .contact{padding:26px}
+  .node small{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="gutter">
+  <div class="inner">
+    <a class="brand" href="#top"><span class="mark">SR</span>Sajid Rasheed</a>
+    <div class="links">
+      <a href="#ghl">GoHighLevel</a><a href="#fub">Follow Up Boss</a><a href="#zapier">Zapier</a><a href="#n8n">n8n &amp; AI</a><a href="#experience">Experience</a>
+    </div>
+    <div style="display:flex;gap:8px"><a class="btn sm ghost" href="https://calendly.com/sajid-smartautomation/45min" target="_blank" rel="noopener">Book a call</a><a class="btn sm" href="#contact">Hire me</a></div>
+  </div>
+</nav>
+
+<main class="gutter" id="top">
+<div class="inner stack">
+
+  <header class="hero">
+    <div>
+      <span class="pill">Available for full-time &amp; freelance roles</span>
+      <h1>CRM &amp; AI automation that makes sure <em>no lead is missed.</em></h1>
+      <p class="lead">I set up GoHighLevel and Follow Up Boss, connect them to every lead source with Zapier, n8n, APIs and webhooks, and build AI agents that qualify leads and support customers.</p>
+      <div class="cta">
+        <a class="btn" href="https://calendly.com/sajid-smartautomation/45min" target="_blank" rel="noopener">Book a 45-min call</a>
+        <a class="btn ghost" href="#ghl">See what I build</a>
+      </div>
+      <div class="facts">
+        <span>📍 Lahore, Pakistan</span><span>💼 CRM &amp; AI Automation Specialist at TechnStack</span><span>🌍 Remote · open to relocation</span>
+      </div>
+    </div>
+
+    <div class="run" aria-label="Example automation run">
+      <div class="run-head"><span>new-lead-intake · Zapier + FUB</span><span class="ok">● Succeeded</span></div>
+      <div class="run-body">
+        <div class="node t"><b>Trigger</b><span>New lead from Meta Lead Ads</span><small>0.0s</small></div>
+        <div class="wire"></div>
+        <div class="node"><b>Zapier</b><span>Create person in Follow Up Boss, tag source</span><small>1.2s</small></div>
+        <div class="wire d2"></div>
+        <div class="node"><b>FUB</b><span>Route to agent, start action plan</span><small>2.0s</small></div>
+        <div class="wire d3"></div>
+        <div class="node r"><b>Result</b><span>Lead gets a text, agent gets a task</span><small>&lt; 1 min</small></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="strip" aria-label="Platforms">
+    <p>Platforms I build on</p>
+    <span>GoHighLevel</span><span>Follow Up Boss</span><span>Zapier</span><span>n8n</span><span>Make.com</span><span>OpenAI</span><span>Claude</span><span>Gemini</span><span>Twilio</span>
+  </section>
+
+  <section class="stats" aria-label="At a glance">
+    <div class="stat"><strong>2+ yrs</strong><small>building automation systems</small></div>
+    <div class="stat"><strong>5</strong><small>real estate client types: agents, teams, investors, wholesalers, lenders</small></div>
+    <div class="stat"><strong>3</strong><small>LLMs in production agents: OpenAI, Claude, Gemini</small></div>
+    <div class="stat"><strong>L1 + L2</strong><small>n8n certified</small></div>
+  </section>
+
+  <section class="sec" id="services">
+    <div class="head">
+      <p class="eyebrow">Services</p>
+      <h2>What I do for client businesses</h2>
+      <p>The same work I deliver every day at TechnStack, for real estate businesses and any company that runs on leads.</p>
+    </div>
+    <div class="services">
+      <article class="card svc">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 4v16"/></svg></div>
+        <h3>GoHighLevel setup &amp; automation</h3>
+        <p>Sub-accounts, pipelines, workflows, campaigns, calendars, funnels and multi-step follow-up for any business.</p>
+        <a href="#ghl">What I build in GoHighLevel →</a>
+      </article>
+      <article class="card svc">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></div>
+        <h3>Follow Up Boss for real estate</h3>
+        <p>Lead flow, routing, action plans, automations and integrations for agents, teams, investors, wholesalers and lenders.</p>
+        <a href="#fub">What I build in Follow Up Boss →</a>
+      </article>
+      <article class="card svc">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
+        <h3>Zapier integrations</h3>
+        <p>Connect CRMs to lead sources and business tools: Meta, SMS marketing, cold-calling dialers, e-signature platforms and more.</p>
+        <a href="#zapier">See Zapier examples →</a>
+      </article>
+      <article class="card svc">
+        <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8M18 8l-5 8"/></svg></div>
+        <h3>n8n workflows &amp; AI agents</h3>
+        <p>LLM-powered agents and chatbots, REST API and webhook integrations, custom JavaScript, plus monitoring and error handling.</p>
+        <a href="#n8n">See n8n &amp; AI examples →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ GOHIGHLEVEL ============ -->
+  <section class="platform" id="ghl">
+    <div class="p-head">
+      <div>
+        <p class="eyebrow">GoHighLevel · for every business</p>
+        <h2>One system for leads, follow-up, booking and reviews</h2>
+        <p>GoHighLevel can replace five or six separate tools. I set it up so leads from every channel land in one pipeline, get followed up automatically by SMS and email, book themselves on a calendar, and leave a review after the job is done.</p>
+      </div>
+      <div class="who">
+        <h4>Businesses I set it up for</h4>
+        <ul class="tags"><li>Real estate</li><li>Investors &amp; wholesalers</li><li>Lenders</li><li>Home services</li><li>Clinics &amp; med spas</li><li>Coaches &amp; consultants</li><li>Marketing agencies</li><li>Local businesses</li></ul>
+      </div>
+    </div>
+    <div class="p-body">
+      <div>
+        <p class="sub">What I build in GoHighLevel</p>
+        <div class="caps">
+          <div class="cap"><div><h4>Account &amp; sub-account setup</h4><p>Sub-accounts, users, permissions, phone numbers, email domains and snapshots for fast repeat setups.</p></div></div>
+          <div class="cap"><div><h4>Pipelines &amp; opportunities</h4><p>Stages that match how the business sells, with automatic stage moves as leads respond or book.</p></div></div>
+          <div class="cap"><div><h4>Workflows &amp; triggers</h4><p>Form submitted, tag added, stage changed, appointment booked or no-show: each one starts the right actions.</p></div></div>
+          <div class="cap"><div><h4>Lead routing</h4><p>Round-robin or rule-based assignment by source, service or location, with instant team notifications.</p></div></div>
+          <div class="cap"><div><h4>Multi-step follow-up sequences</h4><p>SMS, email and call-task cadences for lead nurturing that stop automatically when the lead replies.</p></div></div>
+          <div class="cap"><div><h4>Campaigns &amp; re-engagement</h4><p>Broadcasts and long-term drip campaigns that wake up old and cold leads.</p></div></div>
+          <div class="cap"><div><h4>Calendars &amp; reminders</h4><p>Booking calendars with confirmations, reminders and no-show recovery to protect show rates.</p></div></div>
+          <div class="cap"><div><h4>Funnels, websites &amp; forms</h4><p>Landing pages, lead forms and surveys that write straight into custom fields.</p></div></div>
+          <div class="cap"><div><h4>Missed-call text back</h4><p>Every missed call gets an instant text so the lead doesn't call the next company.</p></div></div>
+          <div class="cap"><div><h4>Reviews &amp; reputation</h4><p>Automatic review requests after a job or appointment, with alerts for unhappy replies.</p></div></div>
+          <div class="cap"><div><h4>AI chat &amp; conversation bots</h4><p>Bots that answer FAQs, qualify leads and book appointments on website chat, SMS and social.</p></div></div>
+          <div class="cap"><div><h4>Integrations &amp; webhooks</h4><p>Meta, Twilio, Zapier and n8n through native integrations, inbound webhooks and the API.</p></div></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="sub">How I'd set it up by industry</p>
+        <div class="inds">
+          <div class="ind"><h4>Real estate, investors &amp; wholesalers</h4><p>Buyer and seller pipelines, motivated-seller follow-up, offer and contract stages, cold-call list handoffs.</p></div>
+          <div class="ind"><h4>Lenders &amp; mortgage</h4><p>Application intake, document request reminders, status-update texts and referral partner updates.</p></div>
+          <div class="ind"><h4>Home services</h4><p>Quote request → instant reply → booked estimate → job done → review request.</p></div>
+          <div class="ind"><h4>Clinics, dental &amp; med spas</h4><p>Online booking, appointment reminders, no-show recovery and rebooking campaigns.</p></div>
+          <div class="ind"><h4>Coaches, consultants &amp; agencies</h4><p>Funnels, discovery-call booking, client onboarding sequences and client sub-accounts.</p></div>
+          <div class="ind"><h4>Local businesses &amp; e-commerce</h4><p>Missed-call text back, reviews, win-back offers and SMS promotions to past customers.</p></div>
+        </div>
+      </div>
+
+      <div>
+        <p class="sub">Example GoHighLevel workflow · new lead to booked appointment</p>
+        <div class="flowrow">
+          <div class="node t"><b>Trigger</b><span>Form submitted or Meta lead</span></div><div class="arrow">→</div>
+          <div class="node"><b>Action</b><span>Create opportunity, assign by round robin</span></div><div class="arrow">→</div>
+          <div class="node"><b>Action</b><span>Instant SMS + email, then 7-day follow-up</span></div><div class="arrow">→</div>
+          <div class="node"><b>Action</b><span>Booking link; reminders 24h and 1h before</span></div><div class="arrow">→</div>
+          <div class="node r"><b>Result</b><span>Stage moves to "Booked", team notified</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOLLOW UP BOSS ============ -->
+  <section class="platform" id="fub">
+    <div class="p-head">
+      <div>
+        <p class="eyebrow">Follow Up Boss · real estate</p>
+        <h2>Lead systems for agents, teams, investors, wholesalers and lenders</h2>
+        <p>At TechnStack I set up, configure and customize Follow Up Boss for real estate clients. Every portal, ad and website lead is captured, routed to the right person and followed up until it converts.</p>
+      </div>
+      <div class="who">
+        <h4>Who I set it up for</h4>
+        <ul class="tags"><li>Solo agents</li><li>Real estate teams</li><li>Investors</li><li>Wholesalers</li><li>Lenders</li></ul>
+      </div>
+    </div>
+    <div class="p-body">
+      <div>
+        <p class="sub">What I do in Follow Up Boss</p>
+        <div class="caps">
+          <div class="cap"><div><h4>Account &amp; team setup</h4><p>Users, roles, teams, groups and permissions so each person sees the right leads.</p></div></div>
+          <div class="cap"><div><h4>Lead source connections</h4><p>Native integrations and email lead parsing for portals, websites and ad platforms, so leads arrive with their source.</p></div></div>
+          <div class="cap"><div><h4>Lead routing</h4><p>Round robin, first-to-claim and lead ponds, with rules by source, price range or area.</p></div></div>
+          <div class="cap"><div><h4>Stages, tags &amp; custom fields</h4><p>A clean structure that matches the client's process, from new lead to closed deal.</p></div></div>
+          <div class="cap"><div><h4>Smart lists</h4><p>Daily call lists for agents: new leads, hot leads, no contact in 7 days, past clients.</p></div></div>
+          <div class="cap"><div><h4>Action plans</h4><p>Drip email, text and task plans for buyers, sellers, investors and long-term nurture.</p></div></div>
+          <div class="cap"><div><h4>Automations</h4><p>Stage or tag changes that start plans, create tasks, reassign leads or notify the team.</p></div></div>
+          <div class="cap"><div><h4>Templates</h4><p>Email and text templates with merge fields for consistent, personal follow-up.</p></div></div>
+          <div class="cap"><div><h4>Deal pipelines</h4><p>Buyer, seller and investor deal stages to track contracts through to closing.</p></div></div>
+          <div class="cap"><div><h4>Zapier connections</h4><p>Meta, SMS/text marketing, cold-calling dialers and e-signature tools connected both ways.</p></div></div>
+          <div class="cap"><div><h4>Data cleanup</h4><p>Duplicate merging, imports and tag cleanup so reports and smart lists stay accurate.</p></div></div>
+          <div class="cap"><div><h4>Monitoring &amp; fixes</h4><p>I watch live integrations, fix failed runs and add error handling so leads don't get lost.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="sub">Example Follow Up Boss lead flow · investor / wholesaler</p>
+        <div class="flowrow">
+          <div class="node t"><b>Trigger</b><span>Seller lead from Meta ad or website</span></div><div class="arrow">→</div>
+          <div class="node"><b>Zapier</b><span>Create person, tag source + property address</span></div><div class="arrow">→</div>
+          <div class="node"><b>FUB</b><span>Route to acquisition manager, start seller action plan</span></div><div class="arrow">→</div>
+          <div class="node"><b>Dialer</b><span>No answer? Lead added to cold-calling list</span></div><div class="arrow">→</div>
+          <div class="node r"><b>Result</b><span>Offer stage → contract sent by e-signature</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ZAPIER ============ -->
+  <section class="sec" id="zapier">
+    <div class="head">
+      <p class="eyebrow">Zapier examples</p>
+      <h2>Connecting CRMs to every lead source</h2>
+      <p>Zaps I build to move leads and data between tools automatically. Each one replaces a manual copy-paste step.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter Zapier examples" id="zap-filters"></div>
+    <div class="recipes" id="zaps"></div>
+  </section>
+
+  <!-- ============ N8N ============ -->
+  <section class="sec" id="n8n">
+    <div class="head">
+      <p class="eyebrow">n8n &amp; AI agents</p>
+      <h2>Custom workflows and AI agents in n8n</h2>
+      <p>For work that needs more than Zapier: LLM agents with prompt engineering, REST APIs, JSON data mapping, custom JavaScript and proper error handling.</p>
+    </div>
+    <div class="recipes" id="n8n-list"></div>
+  </section>
+
+  <section class="sec" id="process">
+    <div class="head">
+      <p class="eyebrow">How I work</p>
+      <h2>From messy process to running system</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div><h3>Audit</h3><p>Review the CRM, lead sources and where time or leads get lost.</p></div></div>
+      <div class="step"><div><h3>Map</h3><p>Draw the workflow and agree on triggers, rules and outcomes.</p></div></div>
+      <div class="step"><div><h3>Build</h3><p>Build it in the right tool: GoHighLevel, FUB, Zapier or n8n.</p></div></div>
+      <div class="step"><div><h3>Test</h3><p>Run real test leads and edge cases before going live.</p></div></div>
+      <div class="step"><div><h3>Monitor</h3><p>Watch live runs, fix failures and add error handling.</p></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="toolkit">
+    <div class="head">
+      <p class="eyebrow">Toolkit</p>
+      <h2>Tools and platforms I work in</h2>
+    </div>
+    <div class="tk" id="tk"></div>
+  </section>
+
+  <section class="sec" id="experience">
+    <div class="head">
+      <p class="eyebrow">Experience</p>
+      <h2>Background</h2>
+    </div>
+    <div class="xp">
+      <div class="timeline">
+        <div class="job now">
+          <p class="when">May 2025 – Present · Lahore</p>
+          <h3>CRM &amp; AI Automation Specialist</h3>
+          <p class="org">TechnStack</p>
+          <ul>
+            <li>Set up, configure and customize Follow Up Boss and GoHighLevel CRMs for real estate agents, teams, investors, wholesalers and lenders.</li>
+            <li>Build Zapier automations that connect CRMs to Meta, SMS/text marketing, cold-calling dialers and e-signature platforms.</li>
+            <li>Configure native CRM integrations so new leads are captured and routed automatically.</li>
+            <li>Design GoHighLevel pipelines, workflows, campaigns, lead routing and multi-step follow-up sequences.</li>
+            <li>Build LLM-powered AI agents and chatbots in n8n (OpenAI, Claude, Gemini) for lead qualification, customer support and internal operations.</li>
+            <li>Monitor production Zapier and n8n workflows; debug API and webhook errors and add error handling to prevent repeat failures.</li>
+            <li>Replace manual data entry and follow-up with automation, shortening lead response times for client sales teams.</li>
+          </ul>
+        </div>
+        <div class="job">
+          <p class="when">Sep 2024 – Apr 2025 · Remote</p>
+          <h3>n8n Automation Specialist</h3>
+          <p class="org">Independent Projects</p>
+          <ul>
+            <li>Built n8n workflow automations, AI agents and chatbots, both custom and template-based.</li>
+            <li>Integrated third-party apps through REST APIs and webhooks, using JSON data mapping and custom JavaScript.</li>
+            <li>Tested, monitored and refined workflows to handle errors and edge cases.</li>
+          </ul>
+        </div>
+        <div class="job">
+          <p class="when">Sep 2023 – Aug 2024 · Sukkur</p>
+          <h3>IT Specialist, Sindh Region</h3>
+          <p class="org">Ghazali Education Foundation</p>
+          <ul>
+            <li>Managed the EMIS system across multiple schools: admissions, attendance and academic records.</li>
+            <li>Automated data validation with Excel and SQL, improving accuracy and simplifying reporting.</li>
+            <li>Built reports from school data and maintained LAN, biometric and CCTV systems across sites.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h4>Education</h4>
+          <h3>BS Computer Science</h3>
+          <p class="org">Sukkur IBA University</p>
+          <p class="when" style="margin-top:4px">2019 – 2023</p>
+        </div>
+        <div class="card">
+          <h4>Certificates</h4>
+          <div class="item"><h3 style="font-size:1rem">n8n Course, Level 1 &amp; Level 2</h3><p class="muted">n8n</p></div>
+          <div class="item"><h3 style="font-size:1rem">Python Fundamentals</h3><p class="muted">DataCamp</p></div>
+        </div>
+        <div class="card">
+          <h4>Languages</h4>
+          <p>Urdu: Native<br>English: Professional</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div>
+      <p class="eyebrow" style="color:var(--bg);opacity:.7">Let's work together</p>
+      <h2 style="margin-top:12px">Need your CRM and lead flow to run on autopilot?</h2>
+      <p>Send me a message about your setup. I'll show you what can be automated in GoHighLevel, Follow Up Boss, Zapier or n8n.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a class="btn" href="https://calendly.com/sajid-smartautomation/45min" target="_blank" rel="noopener">Book a 45-min call</a>
+        <a class="btn wa" href="https://wa.me/923103560168" target="_blank" rel="noopener">WhatsApp me</a>
+      </div>
+    </div>
+    <div class="rows">
+      <div class="row"><span>Email</span><div><output id="email">sajid.smartautomation@gmail.com</output><button class="copy" type="button" id="copy-email">Copy</button></div></div>
+      <div class="row"><span>Phone / WhatsApp</span><a href="https://wa.me/923103560168" target="_blank" rel="noopener">+92 310 3560168</a></div>
+      <div class="row"><span>LinkedIn</span><a href="https://www.linkedin.com/in/meetsajidrasheed" target="_blank" rel="noopener">in/meetsajidrasheed</a></div>
+      <div class="row"><span>Calendly</span><a href="https://calendly.com/sajid-smartautomation/45min" target="_blank" rel="noopener">sajid-smartautomation/45min</a></div>
+      <div class="row"><span>Location</span><b>Lahore, Pakistan · UTC+5</b></div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer class="gutter"><div class="inner"><span>© 2026 Sajid Rasheed</span><span>CRM &amp; AI Automation Specialist</span></div></footer>
+
+<script>
+/* ---- Edit content here ---- */
+const ZAPS = [
+  {cat:"Lead sources", chain:["Meta Lead Ads: new lead","Follow Up Boss: create person","Tag ad + campaign name"], desc:"Facebook and Instagram leads reach the agent in seconds, with the ad that produced them."},
+  {cat:"Lead sources", chain:["Meta Lead Ads: new lead","GoHighLevel: create contact","Start nurture workflow"], desc:"Ad leads enter a GoHighLevel pipeline and get an instant text and email sequence."},
+  {cat:"Lead sources", chain:["Website form / Typeform","Find or create contact in CRM","SMS welcome via Twilio"], desc:"Checks for duplicates first, so one person never becomes three contacts."},
+  {cat:"Lead sources", chain:["CallRail: new call","CRM: create lead + note","Notify agent"], desc:"Phone leads are logged with caller number, source and call details."},
+  {cat:"Dialers & SMS", chain:["FUB tag: \"Cold call\"","Cold-calling dialer: add to list"], desc:"Agents tag a lead and it appears in the dialer's calling list, with no CSV exports."},
+  {cat:"Dialers & SMS", chain:["Dialer: call disposition","Follow Up Boss: update stage + add note"], desc:"Call outcomes write back to the CRM so the next follow-up step is right."},
+  {cat:"Dialers & SMS", chain:["SMS marketing: lead replies","CRM: create or update lead","Assign + task to call"], desc:"Text-campaign replies turn into owned, workable leads instead of sitting in an inbox."},
+  {cat:"Deals & docs", chain:["CRM stage: \"Offer accepted\"","E-signature tool: send contract","Update deal stage"], desc:"The contract goes out automatically when a deal reaches the right stage."},
+  {cat:"Deals & docs", chain:["E-signature: document signed","CRM: move to \"Under contract\"","Notify team"], desc:"Signed documents update the pipeline without anyone checking email."},
+  {cat:"Booking & reporting", chain:["Calendly: meeting booked","GoHighLevel: move opportunity to \"Booked\""], desc:"Pipeline stages stay accurate when leads book on an outside calendar."},
+  {cat:"Booking & reporting", chain:["CRM: new lead","Google Sheets: add row","Slack: daily summary"], desc:"A simple lead log and team update for clients who want reporting outside the CRM."},
+];
+const N8N = [
+  {chain:["Website chat / webhook","AI agent (OpenAI · Claude · Gemini)","Score + write to CRM"], title:"AI lead qualification agent", desc:"Asks qualifying questions in natural language, scores the lead and creates it in the CRM with a summary for the agent."},
+  {chain:["Customer message","AI chatbot + knowledge base","Answer or hand off to a human"], title:"Customer support chatbot", desc:"Answers common questions from the business's own documents and passes complex cases to the team."},
+  {chain:["Slack question","AI assistant reads SOPs","Reply in thread"], title:"Internal operations assistant", desc:"Helps staff find processes and answers without searching through documents."},
+  {chain:["Webhook (any app)","JSON mapping + JavaScript","REST API call to CRM"], title:"Custom API integration", desc:"Connects apps with no native integration, using HTTP requests, data mapping and Code nodes."},
+  {chain:["New lead","Normalize phone + email, check duplicates","Create or update in CRM"], title:"Lead cleanup before CRM", desc:"Formats data and blocks duplicates so CRM lists and reports stay clean."},
+  {chain:["Workflow fails","Error workflow: retry","Alert with error details"], title:"Error handling & monitoring", desc:"Failed runs retry automatically and alert me with the exact step and error, so fixes are fast."},
+];
+const TOOLKIT = {
+  "CRM":["GoHighLevel","Follow Up Boss","HubSpot","Salesforce","Zoho CRM","Pipedrive","kvCORE","Keap"],
+  "Automation":["Zapier","n8n","Make.com","Native CRM integrations","Power Automate"],
+  "AI":["OpenAI","Claude","Gemini","Prompt engineering","AI agents","Chatbots","AI voice agents (VAPI, Retell AI)"],
+  "Integrations":["REST APIs","Webhooks","Twilio","Meta Lead Ads","SMS/text marketing","Cold-calling dialers","E-signature tools","CallRail","Calendly"],
+  "Technical":["JavaScript","JSON","SQL","Python fundamentals","Excel","Google Sheets"],
+  "Operations":["Workflow monitoring","Troubleshooting","Error handling","Slack","Asana","Notion"],
+};
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const chain = arr => `<div class="chain">${arr.map((s,i)=>`${i?'<em>→</em>':''}<span${i===0?' class="t"':''}>${esc(s)}</span>`).join('')}</div>`;
+
+const zapBox = document.getElementById('zaps'), zf = document.getElementById('zap-filters');
+const cats = ["All", ...new Set(ZAPS.map(z => z.cat))];
+function renderZaps(cat){
+  zapBox.innerHTML = ZAPS.filter(z => cat==="All" || z.cat===cat).map(z =>
+    `<article class="recipe"><span class="eyebrow" style="color:var(--trigger)">${esc(z.cat)}</span>${chain(z.chain)}<p>${esc(z.desc)}</p></article>`).join('');
+  [...zf.children].forEach(b => b.setAttribute('aria-pressed', b.dataset.cat===cat));
+}
+zf.innerHTML = cats.map(c => `<button type="button" id="zf-${c.replace(/\W/g,'')}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+zf.addEventListener('click', e => { const b = e.target.closest('button'); if (b) renderZaps(b.dataset.cat); });
+renderZaps("All");
+
+document.getElementById('n8n-list').innerHTML = N8N.map(n =>
+  `<article class="recipe"><h3>${esc(n.title)}</h3>${chain(n.chain)}<p>${esc(n.desc)}</p></article>`).join('');
+
+document.getElementById('tk').innerHTML = Object.entries(TOOLKIT).map(([g,list]) =>
+  `<div class="card"><h3>${esc(g)}<small>${list.length}</small></h3><div class="chips">${list.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div>`).join('');
+
+document.getElementById('copy-email').addEventListener('click', e => {
+  const b = e.currentTarget, el = document.getElementById('email');
+  navigator.clipboard.writeText(el.textContent).then(() => { b.textContent='Copied'; setTimeout(()=>b.textContent='Copy',1600); })
+  .catch(() => { const r=document.createRange(); r.selectNodeContents(el); const s=getSelection(); s.removeAllRanges(); s.addRange(r); });
+});
+</script>
+</body>
+</html>
