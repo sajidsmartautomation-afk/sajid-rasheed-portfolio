@@ -12,7 +12,7 @@
 :root{
   --bg:#F3F5F9; --surface:#FFFFFF; --sunk:#EAEEF5; --ink:#0E1B33; --muted:#56637B; --line:#D9DFEA;
   --accent:#2A55E5; --accent-ink:#FFFFFF; --accent-soft:#E3E9FD; --trigger:#B86A0A; --trigger-soft:#FCEED8;
-  --ok:#17845A; --ok-soft:#DDF3E8;
+  --ok:#17845A; --ok-soft:#DDF3E8; --ai:#7A45D8;
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -21,11 +21,11 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0B1220; --surface:#121C2E; --sunk:#0F1828; --ink:#E8EDF6; --muted:#9BA7BD; --line:#24314A;
   --accent:#7E9CFF; --accent-ink:#0B1220; --accent-soft:#1A2648; --trigger:#F1B457; --trigger-soft:#2D2416;
-  --ok:#4FCB93; --ok-soft:#14302A; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+  --ok:#4FCB93; --ok-soft:#14302A; --ai:#B99BFF; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0B1220; --surface:#121C2E; --sunk:#0F1828; --ink:#E8EDF6; --muted:#9BA7BD; --line:#24314A;
   --accent:#7E9CFF; --accent-ink:#0B1220; --accent-soft:#1A2648; --trigger:#F1B457; --trigger-soft:#2D2416;
-  --ok:#4FCB93; --ok-soft:#14302A; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+  --ok:#4FCB93; --ok-soft:#14302A; --ai:#B99BFF; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
@@ -142,6 +142,45 @@ main{padding-block:56px 64px}
 .filters button{font:500 .85rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:7px 14px;border-radius:999px;cursor:pointer}
 .filters button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 
+/* projects with diagrams */
+.filters button small{font:500 .72rem var(--mono);opacity:.7;margin-left:4px}
+.plist{display:flex;flex-direction:column;gap:20px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.pinfo{padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.pmeta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.kind{font:500 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ok);background:var(--ok-soft);padding:3px 9px;border-radius:999px}
+.kind.sample{color:var(--muted);background:var(--sunk)}
+.pinfo h3{font-size:1.35rem}
+.pwho{color:var(--muted);font-size:.9rem;margin-top:-8px}
+.lbl{font:500 .7rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.pinfo ul:not(.tags){margin:0;padding-left:18px;font-size:.95rem}
+.pinfo li+li{margin-top:4px}
+.outcome{color:var(--ok);font-weight:500}
+.dia{background:var(--sunk);border-left:1px solid var(--line);padding:28px;display:flex;flex-direction:column;justify-content:center;min-width:0;
+  background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:18px 18px}
+.st{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:9px 12px;background:var(--surface);min-width:0}
+.st b{font:500 .66rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.st span{font-size:.88rem;line-height:1.35}
+.st.t{border-left-color:var(--trigger)}.st.t b{color:var(--trigger)}
+.st.f{border-left-color:var(--muted);border-style:dashed;border-left-style:solid}.st.f b{color:var(--muted)}
+.st.ai{border-left-color:var(--ai)}.st.ai b{color:var(--ai)}
+.st.r{border-left-color:var(--ok)}.st.r b{color:var(--ok)}
+.conn{width:2px;height:16px;background:var(--line);margin-left:22px;flex:none}
+.branch{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:10px;border:1px dashed var(--line);border-radius:12px;padding:10px}
+.bcol{display:flex;flex-direction:column;gap:6px;min-width:0}
+.blabel{font:500 .68rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bcol .conn{margin-left:14px;height:10px}
+
+/* lead sources panel */
+.sources{display:flex;flex-direction:column;gap:20px;padding:28px}
+.src-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.src-count{font:500 .8rem var(--mono);color:var(--ok);background:var(--ok-soft);padding:4px 10px;border-radius:999px}
+.src-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px 24px}
+.src-group{min-width:0}
+.src-group .chips span{background:var(--trigger-soft);border-color:transparent;color:var(--ink)}
+.src-to{border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:.95rem}
+.src-to b{color:var(--ink);font-weight:600}
+
 /* process */
 .steps{display:grid;grid-template-columns:repeat(5,1fr);counter-reset:s}
 .step{padding-right:18px;position:relative;display:flex;flex-direction:column;gap:10px}
@@ -201,7 +240,13 @@ footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   .flowrow .node{min-width:0}
   .flowrow .arrow{width:auto;height:22px;transform:rotate(90deg)}
 }
+@media (max-width:960px){
+  .pcard{grid-template-columns:1fr}
+  .dia{border-left:0;border-top:1px solid var(--line)}
+}
 @media (max-width:640px){
+  .pinfo,.dia{padding:20px}
+  .branch{grid-template-columns:1fr}
   .services,.caps,.inds,.tk,.recipes{grid-template-columns:1fr}
   .stats{grid-template-columns:repeat(2,1fr)}
   .p-head,.p-body{padding:22px}
@@ -216,7 +261,7 @@ footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   <div class="inner">
     <a class="brand" href="#top"><span class="mark">SR</span>Sajid Rasheed</a>
     <div class="links">
-      <a href="#ghl">GoHighLevel</a><a href="#fub">Follow Up Boss</a><a href="#zapier">Zapier</a><a href="#n8n">n8n &amp; AI</a><a href="#experience">Experience</a>
+      <a href="#ghl">GoHighLevel</a><a href="#fub">Follow Up Boss</a><a href="#zapier">Zapier</a><a href="#n8n">n8n &amp; AI</a><a href="#projects">Projects</a><a href="#platforms">Platforms</a>
     </div>
     <div style="display:flex;gap:8px"><a class="btn sm ghost" href="https://calendly.com/sajid-smartautomation/45min" target="_blank" rel="noopener">Book a call</a><a class="btn sm" href="#contact">Hire me</a></div>
   </div>
@@ -229,7 +274,7 @@ footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
     <div>
       <span class="pill">Available for full-time &amp; freelance roles</span>
       <h1>CRM &amp; AI automation that makes sure <em>no lead is missed.</em></h1>
-      <p class="lead">I set up GoHighLevel and Follow Up Boss, connect them to every lead source with Zapier, n8n, APIs and webhooks, and build AI agents that qualify leads and support customers.</p>
+      <p class="lead">I build CRM setups, lead-source integrations and AI agents that make sure every lead gets a fast reply, using GoHighLevel, Follow Up Boss, Zapier and n8n.</p>
       <div class="cta">
         <a class="btn" href="https://calendly.com/sajid-smartautomation/45min" target="_blank" rel="noopener">Book a 45-min call</a>
         <a class="btn ghost" href="#ghl">See what I build</a>
@@ -259,7 +304,7 @@ footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   </section>
 
   <section class="stats" aria-label="At a glance">
-    <div class="stat"><strong>2+ yrs</strong><small>building automation systems</small></div>
+    <div class="stat"><strong>3+ yrs</strong><small>experience in automation, CRM &amp; IT</small></div>
     <div class="stat"><strong>5</strong><small>real estate client types: agents, teams, investors, wholesalers, lenders</small></div>
     <div class="stat"><strong>3</strong><small>LLMs in production agents: OpenAI, Claude, Gemini</small></div>
     <div class="stat"><strong>L1 + L2</strong><small>n8n certified</small></div>
@@ -401,24 +446,128 @@ footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
   </section>
 
   <!-- ============ ZAPIER ============ -->
-  <section class="sec" id="zapier">
-    <div class="head">
-      <p class="eyebrow">Zapier examples</p>
-      <h2>Connecting CRMs to every lead source</h2>
-      <p>Zaps I build to move leads and data between tools automatically. Each one replaces a manual copy-paste step.</p>
+  <section class="platform" id="zapier">
+    <div class="p-head">
+      <div>
+        <p class="eyebrow">Zapier · integrations</p>
+        <h2>Connecting CRMs to every lead source</h2>
+        <p>I build Zaps that move leads and data between your tools automatically: lead sources into the CRM, CRM into dialers, SMS tools and e-signature, and results back again. Each Zap replaces a manual copy-paste step.</p>
+      </div>
+      <div class="who">
+        <h4>CRMs I connect</h4>
+        <ul class="tags"><li>Follow Up Boss</li><li>GoHighLevel</li><li>HubSpot</li><li>Salesforce</li><li>Pipedrive</li><li>Airtable</li><li>ClickUp</li></ul>
+      </div>
     </div>
-    <div class="filters" role="group" aria-label="Filter Zapier examples" id="zap-filters"></div>
-    <div class="recipes" id="zaps"></div>
+    <div class="p-body">
+      <div>
+        <p class="sub">What I do in Zapier</p>
+        <div class="caps">
+          <div class="cap"><div><h4>Multi-step Zaps</h4><p>One trigger, many actions: create the lead, tag it, assign it, notify the team and log it.</p></div></div>
+          <div class="cap"><div><h4>Filters &amp; Paths</h4><p>If-this-then-that logic that sends each lead down the right path by source, stage or answer.</p></div></div>
+          <div class="cap"><div><h4>Formatter</h4><p>Clean phone numbers, names, dates and text so data lands in the CRM correctly.</p></div></div>
+          <div class="cap"><div><h4>Field mapping &amp; lookup tables</h4><p>Map fields between different CRMs and tools, and translate values like stages and owners.</p></div></div>
+          <div class="cap"><div><h4>Find-or-create</h4><p>Search first, then update or create, so the same person never becomes two contacts.</p></div></div>
+          <div class="cap"><div><h4>Webhooks</h4><p>Catch data from any tool that can send a webhook, and send data to tools with no Zapier app.</p></div></div>
+          <div class="cap"><div><h4>Email Parser</h4><p>Pull lead details out of notification emails from sources that have no integration.</p></div></div>
+          <div class="cap"><div><h4>Delays &amp; schedules</h4><p>Wait-then-check steps, such as "no call logged in 5 minutes, re-assign the lead".</p></div></div>
+          <div class="cap"><div><h4>Zapier Tables &amp; Storage</h4><p>Keep counters, round-robin positions and lookup data between Zap runs.</p></div></div>
+          <div class="cap"><div><h4>AI by Zapier</h4><p>AI steps that summarize messages, classify replies and extract details from text.</p></div></div>
+          <div class="cap"><div><h4>Monitoring &amp; fixes</h4><p>Watch live Zaps, fix failed runs and add error alerts so no lead is lost.</p></div></div>
+          <div class="cap"><div><h4>Task cost cleanup</h4><p>Rebuild heavy Zaps with filters and fewer steps to lower monthly Zapier task usage.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="sub">Example Zap · hot SMS lead to Follow Up Boss</p>
+        <div class="flowrow">
+          <div class="node t"><b>Trigger</b><span>Lead marked "Hot" in SMS tool</span></div><div class="arrow">→</div>
+          <div class="node"><b>Formatter</b><span>Clean phone, map property fields</span></div><div class="arrow">→</div>
+          <div class="node"><b>Find</b><span>Search FUB for existing person</span></div><div class="arrow">→</div>
+          <div class="node"><b>Paths</b><span>New: create · Exists: update + note</span></div><div class="arrow">→</div>
+          <div class="node r"><b>Result</b><span>Round robin assigns rep, action plan starts</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="sub">Zapier examples</p>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div class="filters" role="group" aria-label="Filter Zapier examples" id="zap-filters"></div>
+          <div class="recipes" id="zaps"></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============ N8N ============ -->
-  <section class="sec" id="n8n">
-    <div class="head">
-      <p class="eyebrow">n8n &amp; AI agents</p>
-      <h2>Custom workflows and AI agents in n8n</h2>
-      <p>For work that needs more than Zapier: LLM agents with prompt engineering, REST APIs, JSON data mapping, custom JavaScript and proper error handling.</p>
+  <section class="platform" id="n8n">
+    <div class="p-head">
+      <div>
+        <p class="eyebrow">n8n · workflows &amp; AI agents</p>
+        <h2>Custom workflows and AI agents in n8n</h2>
+        <p>For work that needs more than Zapier: AI agents with memory and tools, REST API integrations, JSON data mapping, custom JavaScript, and error handling that keeps live workflows running.</p>
+      </div>
+      <div class="who">
+        <h4>Used for</h4>
+        <ul class="tags"><li>Lead qualification</li><li>Customer support</li><li>Internal operations</li><li>API integrations</li><li>Reporting</li><li>Data cleanup</li></ul>
+      </div>
     </div>
-    <div class="recipes" id="n8n-list"></div>
+    <div class="p-body">
+      <div>
+        <p class="sub">What I do in n8n</p>
+        <div class="caps">
+          <div class="cap"><div><h4>AI agents</h4><p>Agents with memory and tools on OpenAI, Claude and Gemini that qualify leads and take actions.</p></div></div>
+          <div class="cap"><div><h4>Prompt engineering</h4><p>Prompts that keep agents on task, in the right tone, and return clean structured output.</p></div></div>
+          <div class="cap"><div><h4>Knowledge-base chatbots</h4><p>Chatbots that answer from the company's own documents using vector stores (RAG).</p></div></div>
+          <div class="cap"><div><h4>HTTP requests &amp; REST APIs</h4><p>Connect any app with an API, including tools that have no Zapier or n8n node.</p></div></div>
+          <div class="cap"><div><h4>Webhooks</h4><p>Receive data from forms, CRMs, Zapier and voice agents, and respond in real time.</p></div></div>
+          <div class="cap"><div><h4>JSON data mapping</h4><p>Reshape API responses into exactly the fields each CRM expects.</p></div></div>
+          <div class="cap"><div><h4>JavaScript Code nodes</h4><p>Custom logic for cleaning, scoring, deduplicating and transforming data.</p></div></div>
+          <div class="cap"><div><h4>IF, Switch, loops &amp; merges</h4><p>Branching logic and batch processing for complex, multi-step workflows.</p></div></div>
+          <div class="cap"><div><h4>Scheduled jobs</h4><p>Daily reports, nightly syncs and hourly checks that run on their own.</p></div></div>
+          <div class="cap"><div><h4>Error workflows</h4><p>Automatic retries and alerts with the exact failed step, so problems get fixed fast.</p></div></div>
+          <div class="cap"><div><h4>Cloud or self-hosted setup</h4><p>n8n Cloud, or self-hosted n8n with credentials and environments set up properly.</p></div></div>
+          <div class="cap"><div><h4>Sub-workflows &amp; templates</h4><p>Reusable building blocks that make new workflows faster and easier to maintain.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <p class="sub">Example n8n workflow · AI SMS lead qualification</p>
+        <div class="flowrow">
+          <div class="node t"><b>Webhook</b><span>Seller replies to a text</span></div><div class="arrow">→</div>
+          <div class="node"><b>AI agent</b><span>Asks motivation, timeline, price with memory</span></div><div class="arrow">→</div>
+          <div class="node"><b>Switch</b><span>Hot · Warm · Cold</span></div><div class="arrow">→</div>
+          <div class="node"><b>HTTP</b><span>Create lead in FUB via API</span></div><div class="arrow">→</div>
+          <div class="node r"><b>Result</b><span>Rep gets lead + conversation summary</span></div>
+        </div>
+      </div>
+      <div>
+        <p class="sub">n8n examples</p>
+        <div class="recipes" id="n8n-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section class="sec" id="projects">
+    <div class="head">
+      <p class="eyebrow">Projects</p>
+      <h2>Systems I've built, step by step</h2>
+      <p>Client work is confidential, so these diagrams show how each system works with client names and data removed. Cards marked "Sample build" show systems I build using the same methods.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter projects" id="proj-filters"></div>
+    <div class="plist" id="proj-list"></div>
+  </section>
+
+  <!-- ============ PLATFORMS & LEAD SOURCES ============ -->
+  <section class="sec" id="platforms">
+    <div class="head">
+      <p class="eyebrow">Platforms &amp; lead sources</p>
+      <h2>Everything I connect and work in</h2>
+      <p>All the lead sources, CRMs, automation tools and AI platforms in one place.</p>
+    </div>
+    <div class="sources card">
+      <div class="src-head"><h3>Lead sources I connect to your CRM</h3><span class="src-count" id="src-count"></span></div>
+      <div class="src-grid" id="src-grid"></div>
+      <p class="src-to">→ into <b>Follow Up Boss</b> · <b>GoHighLevel</b> · <b>HubSpot</b> · <b>Salesforce</b> · <b>Pipedrive</b> · <b>Airtable</b> · <b>ClickUp</b></p>
+    </div>
+    <div class="tk" id="tk"></div>
   </section>
 
   <section class="sec" id="process">
@@ -435,13 +584,6 @@ footer .inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
     </div>
   </section>
 
-  <section class="sec" id="toolkit">
-    <div class="head">
-      <p class="eyebrow">Toolkit</p>
-      <h2>Tools and platforms I work in</h2>
-    </div>
-    <div class="tk" id="tk"></div>
-  </section>
 
   <section class="sec" id="experience">
     <div class="head">
@@ -536,11 +678,26 @@ const ZAPS = [
   {cat:"Lead sources", chain:["Meta Lead Ads: new lead","GoHighLevel: create contact","Start nurture workflow"], desc:"Ad leads enter a GoHighLevel pipeline and get an instant text and email sequence."},
   {cat:"Lead sources", chain:["Website form / Typeform","Find or create contact in CRM","SMS welcome via Twilio"], desc:"Checks for duplicates first, so one person never becomes three contacts."},
   {cat:"Lead sources", chain:["CallRail: new call","CRM: create lead + note","Notify agent"], desc:"Phone leads are logged with caller number, source and call details."},
+  {cat:"Lead sources", chain:["Google Ads lead form","Follow Up Boss / GHL: create lead","Instant SMS"], desc:"Leads from Google Ads lead forms reach the CRM in seconds, tagged with the campaign."},
+  {cat:"Lead sources", chain:["LinkedIn Lead Gen Form","HubSpot / Salesforce: create lead","Assign owner"], desc:"B2B leads from LinkedIn ads go straight to the sales rep who owns the territory."},
+  {cat:"Lead sources", chain:["TikTok Lead Ads","GoHighLevel: create contact","Start nurture workflow"], desc:"TikTok ad leads get the same instant follow-up as every other channel."},
+  {cat:"Lead sources", chain:["Zillow / Realtor.com inquiry","Follow Up Boss: tag source + price","Route to agent"], desc:"Portal leads arrive tagged and routed, with the property they asked about."},
+  {cat:"Lead sources", chain:["Carrot / investor website form","Follow Up Boss: create seller lead","Seller action plan"], desc:"Motivated-seller form leads start follow-up immediately, with address and situation saved."},
+  {cat:"Lead sources", chain:["WordPress / Elementor / Webflow form","Find or create contact","Notify team in Slack"], desc:"Website forms on any platform feed one CRM, with no duplicates."},
+  {cat:"Lead sources", chain:["JotForm / Gravity Forms / Google Forms","CRM: create lead","Add to pipeline"], desc:"Survey and application forms become pipeline opportunities."},
+  {cat:"Lead sources", chain:["Unbounce / ClickFunnels landing page","GoHighLevel: create contact","Tag funnel + offer"], desc:"Landing page leads keep the funnel and offer they came from for reporting."},
+  {cat:"Lead sources", chain:["Gmail: lead notification email","Zapier Email Parser: extract fields","CRM: create lead"], desc:"Lead sources with no integration are parsed from their notification emails."},
+  {cat:"Lead sources", chain:["Facebook Messenger / Instagram DM","CRM: create contact","Assign + reply task"], desc:"Social messages become tracked leads instead of getting lost in inboxes."},
+  {cat:"Lead sources", chain:["WhatsApp / Twilio SMS inbound","CRM: find or create contact","Log message"], desc:"Inbound texts and WhatsApp messages are logged on the right contact."},
+  {cat:"Lead sources", chain:["Thumbtack / Angi / Yelp lead","GoHighLevel: create opportunity","Instant text reply"], desc:"Home-service marketplace leads get a reply before competitors respond."},
+  {cat:"Lead sources", chain:["Webinar / event registration","CRM: create contact + tag event","Reminder sequence"], desc:"Event sign-ups go into the CRM with reminders and follow-up after the event."},
+  {cat:"Lead sources", chain:["Shopify: new customer / abandoned checkout","Klaviyo / GHL: add contact","Recovery sequence"], desc:"E-commerce customers and abandoned checkouts start the right email and SMS flow."},
+  {cat:"Lead sources", chain:["Referral partner form","CRM: create lead + partner tag","Notify partner"], desc:"Referral leads are credited to the partner who sent them."},
   {cat:"Dialers & SMS", chain:["FUB tag: \"Cold call\"","Cold-calling dialer: add to list"], desc:"Agents tag a lead and it appears in the dialer's calling list, with no CSV exports."},
   {cat:"Dialers & SMS", chain:["Dialer: call disposition","Follow Up Boss: update stage + add note"], desc:"Call outcomes write back to the CRM so the next follow-up step is right."},
   {cat:"Dialers & SMS", chain:["SMS marketing: lead replies","CRM: create or update lead","Assign + task to call"], desc:"Text-campaign replies turn into owned, workable leads instead of sitting in an inbox."},
-  {cat:"Deals & docs", chain:["CRM stage: \"Offer accepted\"","E-signature tool: send contract","Update deal stage"], desc:"The contract goes out automatically when a deal reaches the right stage."},
-  {cat:"Deals & docs", chain:["E-signature: document signed","CRM: move to \"Under contract\"","Notify team"], desc:"Signed documents update the pipeline without anyone checking email."},
+  {cat:"Deals & docs", chain:["CRM stage: \"Offer accepted\"","PandaDoc / DocuSign: send contract","Update deal stage"], desc:"The contract goes out automatically when a deal reaches the right stage."},
+  {cat:"Deals & docs", chain:["PandaDoc / DocuSign: signed","CRM: move to \"Under contract\"","Notify team"], desc:"Signed documents update the pipeline without anyone checking email."},
   {cat:"Booking & reporting", chain:["Calendly: meeting booked","GoHighLevel: move opportunity to \"Booked\""], desc:"Pipeline stages stay accurate when leads book on an outside calendar."},
   {cat:"Booking & reporting", chain:["CRM: new lead","Google Sheets: add row","Slack: daily summary"], desc:"A simple lead log and team update for clients who want reporting outside the CRM."},
 ];
@@ -553,16 +710,336 @@ const N8N = [
   {chain:["Workflow fails","Error workflow: retry","Alert with error details"], title:"Error handling & monitoring", desc:"Failed runs retry automatically and alert me with the exact step and error, so fixes are fast."},
 ];
 const TOOLKIT = {
-  "CRM":["GoHighLevel","Follow Up Boss","HubSpot","Salesforce","Zoho CRM","Pipedrive","kvCORE","Keap"],
+  "CRM":["GoHighLevel","Follow Up Boss","HubSpot","Salesforce","Pipedrive","Airtable","Zoho CRM","kvCORE","Keap"],
   "Automation":["Zapier","n8n","Make.com","Native CRM integrations","Power Automate"],
   "AI":["OpenAI","Claude","Gemini","Prompt engineering","AI agents","Chatbots","AI voice agents (VAPI, Retell AI)"],
-  "Integrations":["REST APIs","Webhooks","Twilio","Meta Lead Ads","SMS/text marketing","Cold-calling dialers","E-signature tools","CallRail","Calendly"],
-  "Technical":["JavaScript","JSON","SQL","Python fundamentals","Excel","Google Sheets"],
-  "Operations":["Workflow monitoring","Troubleshooting","Error handling","Slack","Asana","Notion"],
+  "Lead sources":["Smarter Contact","Launch Control","SMS/text marketing","Cold-calling dialers","Meta Lead Ads","Website forms","Twilio","CallRail","Calendly"],
+  "Documents & projects":["PandaDoc","DocuSign","Google Drive","ClickUp","Google Sheets","Slack","Asana","Notion"],
+  "Technical":["REST APIs","Webhooks","JavaScript","JSON","SQL","Python fundamentals","Excel","Error handling"],
 };
+
+/* ---- Projects: k = t trigger, a action, f logic/filter, ai AI step, r result ---- */
+const PROJECTS = [
+  {cat:"Zapier", kind:"Client work", title:"Hot SMS leads into Follow Up Boss with round-robin assignment",
+   who:"Real estate investors & wholesalers",
+   problem:"Teams ran text campaigns in Smarter Contact and Launch Control. Hot replies stayed in the SMS tool until someone copied them into the CRM by hand.",
+   built:["Zap triggers the moment a lead is marked Hot","Maps phone, property address, campaign and reply into FUB fields","Searches FUB first so no duplicate people are created","FUB lead flow assigns acquisition reps by round robin and starts the seller action plan"],
+   tools:["Smarter Contact","Launch Control","Zapier","Follow Up Boss"],
+   outcome:"Hot leads reach the right rep automatically, with full context, instead of waiting for manual entry.",
+   flow:[["t","SMS tool","Lead marked \"Hot\""],["a","Zapier","Format phone, map property fields"],["f","Zapier","Find person in Follow Up Boss"],
+     {branch:[{label:"New lead",steps:[["a","FUB","Create person, tag source + campaign"]]},{label:"Already exists",steps:[["a","FUB","Update person, add reply as note"]]}]},
+     ["a","FUB lead flow","Round robin to acquisition rep"],["r","Result","Action plan started, rep notified"]]},
+
+  {cat:"Zapier", kind:"Client work", title:"Closed deal → PandaDoc contract filled and sent automatically",
+   who:"Real estate teams",
+   problem:"When a deal moved to contract, someone retyped names, property details and price into the contract template.",
+   built:["Stage change in Follow Up Boss starts the Zap","Pulls person and deal fields and maps them into PandaDoc template tokens","Sends the document for e-signature","When signed: saves the PDF to Google Drive and updates the FUB stage"],
+   tools:["Follow Up Boss","Zapier","PandaDoc","Google Drive"],
+   outcome:"Contracts go out in minutes with correct details, and signed copies are filed with no manual work.",
+   flow:[["t","FUB","Deal stage → \"Under contract\""],["a","Zapier","Get person + deal fields"],["a","PandaDoc","Create from template, map fields"],["a","PandaDoc","Send for e-signature"],
+     ["t","PandaDoc","Document completed"],["r","Google Drive + FUB","Signed PDF saved, stage updated"]]},
+
+  {cat:"Zapier", kind:"Client work", title:"Cold-calling dialer outcomes routed into Follow Up Boss",
+   who:"Investor call teams",
+   problem:"Callers set dispositions in the dialer, but the CRM never knew which leads were interested or needed a callback.",
+   built:["Zap triggers on every saved call disposition","Zapier Paths split the flow by outcome","Interested leads become Hot in FUB and get assigned","Callbacks create a dated task; dead leads are tagged and removed from lists"],
+   tools:["Cold-calling dialer","Zapier","Follow Up Boss"],
+   outcome:"Every call outcome lands in the CRM, so no interested seller is forgotten.",
+   flow:[["t","Dialer","Call disposition saved"],["f","Zapier Paths","Split by disposition"],
+     {branch:[{label:"Interested",steps:[["a","FUB","Stage \"Hot\", assign rep"]]},{label:"Callback",steps:[["a","FUB","Task on callback date"]]},{label:"Not interested",steps:[["a","FUB","Tag, remove from list"]]}]},
+     ["r","Result","CRM matches the dialer"]]},
+
+  {cat:"Zapier", kind:"Client work", title:"Won deal → DocuSign → ClickUp onboarding",
+   who:"Service businesses",
+   problem:"After a deal was won, the agreement, client folder and onboarding tasks were all set up by hand.",
+   built:["Pipedrive won deal triggers the Zap","DocuSign envelope created from a template with deal fields","On completion: Google Drive client folder created and PDF saved","ClickUp onboarding tasks created and assigned"],
+   tools:["Pipedrive","DocuSign","Google Drive","ClickUp","Zapier"],
+   outcome:"Every new client gets the same onboarding, started the minute the agreement is signed.",
+   flow:[["t","Pipedrive","Deal marked Won"],["a","DocuSign","Envelope from template"],["t","DocuSign","Envelope completed"],["a","Google Drive","Create client folder, save PDF"],["a","ClickUp","Create onboarding tasks"],["r","Slack","Team notified"]]},
+
+  {cat:"Zapier", kind:"Client work", title:"Meta and website leads routed to the right CRM",
+   who:"Multi-brand businesses",
+   problem:"Leads from several forms and ad accounts needed to reach different CRMs and owners.",
+   built:["One Zap catches Meta Lead Ads and website form leads","Paths route by form or brand","Creates HubSpot contacts + deals, or Salesforce leads with an owner","Logs every lead to Google Sheets for reporting"],
+   tools:["Meta Lead Ads","Zapier","HubSpot","Salesforce","Google Sheets"],
+   outcome:"Each lead reaches the correct team without anyone sorting them manually.",
+   flow:[["t","Meta / Website","New lead submitted"],["f","Zapier Paths","Route by form or brand"],
+     {branch:[{label:"Brand A",steps:[["a","HubSpot","Create contact + deal"]]},{label:"Brand B",steps:[["a","Salesforce","Create lead, set owner"]]}]},
+     ["r","Google Sheets","Lead logged for reporting"]]},
+
+  {cat:"Zapier", kind:"Sample build", title:"Airtable lead database synced with GoHighLevel",
+   who:"Teams using Airtable as their database",
+   problem:"Lead status lived in Airtable while follow-up ran in GoHighLevel, and the two drifted apart.",
+   built:["Airtable status \"Ready\" creates or updates the GHL contact","Contact is added to the right GHL workflow","Booked appointments write status and date back to Airtable"],
+   tools:["Airtable","Zapier","GoHighLevel"],
+   outcome:"Both systems always show the same status.",
+   flow:[["t","Airtable","Record status → \"Ready\""],["a","GoHighLevel","Create/update contact, add to workflow"],["t","GoHighLevel","Appointment booked"],["r","Airtable","Status + date updated"]]},
+
+  {cat:"n8n + Zapier", kind:"Sample build", title:"Lead hub: Zapier collects, n8n processes",
+   who:"Teams with many lead sources",
+   problem:"Many lead sources, each with its own format, and complex logic that would need dozens of Zap steps.",
+   built:["Zapier uses its app triggers to catch leads from SMS tools, dialers and websites","Each Zap sends the lead to one n8n webhook","n8n normalizes data with JavaScript, dedupes against the CRM and scores the lead with AI","Creates or updates the lead in Follow Up Boss through the API, with an error workflow for failures"],
+   tools:["Zapier","n8n","JavaScript","OpenAI","Follow Up Boss API"],
+   outcome:"One place for lead logic, fewer Zap tasks, and clean data in the CRM.",
+   flow:[["t","Zapier","Leads from SMS, dialer, website"],["a","Zapier","POST to n8n webhook"],["a","n8n Code","Normalize phone + email"],["f","n8n","Dedupe via CRM API"],["ai","n8n AI","Score motivation from notes"],["a","n8n HTTP","Create/update in Follow Up Boss"],["r","Error workflow","Retry + alert on failure"]]},
+
+  {cat:"n8n + Zapier", kind:"Sample build", title:"Daily pipeline report from CRM APIs",
+   who:"Sales managers",
+   problem:"Managers built pipeline numbers by hand from CRM exports every morning.",
+   built:["n8n schedule runs every morning","HTTP requests pull deals from Pipedrive or HubSpot","Code node calculates counts and values per stage","Updates a Google Sheets dashboard and posts a Slack summary"],
+   tools:["n8n","Pipedrive","HubSpot","Google Sheets","Slack"],
+   outcome:"The team starts every day with up-to-date numbers.",
+   flow:[["t","n8n Schedule","Every morning"],["a","n8n HTTP","Pull deals from CRM API"],["a","n8n Code","Totals per stage"],["a","Google Sheets","Update dashboard"],["r","Slack","Daily summary posted"]]},
+
+  {cat:"AI agents", kind:"Client work", title:"AI SMS lead qualification agent",
+   who:"Real estate investors",
+   problem:"Reps spent hours texting back and forth with sellers who were not ready to sell.",
+   built:["Webhook receives each seller reply","n8n AI agent (OpenAI / Claude) asks about motivation, timeline, condition and price, with memory per phone number","Classifies the lead as Hot, Warm or Cold","Hot leads go to FUB and a rep with a conversation summary"],
+   tools:["n8n","OpenAI","Claude","Follow Up Boss","SMS tool"],
+   outcome:"Reps only talk to qualified sellers, with the background already summarized.",
+   flow:[["t","Webhook","Seller replies to text"],["ai","n8n AI agent","Qualifying questions with memory"],["f","Classify","Hot / Warm / Cold"],
+     {branch:[{label:"Hot",steps:[["a","FUB","Create + assign rep"]]},{label:"Warm",steps:[["a","FUB","Nurture action plan"]]},{label:"Cold",steps:[["a","SMS tool","Tag, stop texting"]]}]},
+     ["r","Rep","Gets conversation summary"]]},
+
+  {cat:"AI agents", kind:"Client work", title:"Customer support chatbot with company knowledge",
+   who:"Any business",
+   problem:"The team answered the same customer questions every day.",
+   built:["Website chat sends messages to n8n","AI agent answers from the company's own documents","Unclear questions are handed to a person in Slack","Conversations are logged to the CRM"],
+   tools:["n8n","OpenAI","Gemini","Google Drive","Slack"],
+   outcome:"Common questions are answered instantly; people handle only complex cases.",
+   flow:[["t","Website chat","Customer message"],["ai","n8n AI agent","Answer from knowledge base"],["f","Confidence","Clear answer?"],
+     {branch:[{label:"Yes",steps:[["a","Chat","Reply to customer"]]},{label:"No",steps:[["a","Slack","Hand off to a person"]]}]},
+     ["r","CRM","Conversation logged"]]},
+
+  {cat:"AI agents", kind:"Client work", title:"Internal operations assistant in Slack",
+   who:"Operations teams",
+   problem:"Staff interrupted each other to find leads, create tasks or look up processes.",
+   built:["Slack message starts the n8n agent","Agent uses tools: search FUB, create ClickUp task, look up SOPs","Replies in the same Slack thread"],
+   tools:["n8n","Gemini","Slack","Follow Up Boss","ClickUp"],
+   outcome:"Quick answers and tasks without leaving Slack.",
+   flow:[["t","Slack","Message to the bot"],["ai","n8n AI agent","Decides which tool to use"],["a","Tools","FUB search · ClickUp task · SOP lookup"],["r","Slack","Reply in thread"]]},
+
+  {cat:"Follow Up Boss", kind:"Client work", title:"Complete Follow Up Boss setup for an investor team",
+   who:"Investor & wholesaler teams",
+   problem:"Leads from SMS, dialers, website and ads arrived in different ways, with no clear owner or follow-up plan.",
+   built:["Connected every lead source with native integrations and Zapier","Lead flow rules per source, round robin across acquisition reps","Unclaimed leads re-assigned or moved to a lead pond","Action plans by stage, daily smart lists and a deal pipeline to closing"],
+   tools:["Follow Up Boss","Zapier","SMS tools","Dialers","Meta Lead Ads"],
+   outcome:"Every lead has an owner, a next step and a place in the pipeline.",
+   flow:[["t","Lead sources","SMS · dialer · website · Meta"],["a","FUB lead flow","Rules per source"],["a","Round robin","Assign acquisition rep"],["f","Not contacted?","Re-assign or lead pond"],["a","Action plans","By stage: new, hot, nurture"],["a","Smart lists","Daily call lists"],["r","Deal pipeline","Offer → contract → closed"]]},
+
+  {cat:"GoHighLevel", kind:"Client work", title:"GoHighLevel pipeline and follow-up for a wholesaler",
+   who:"Real estate wholesalers",
+   problem:"Seller leads had no clear stages, and follow-up depended on memory.",
+   built:["Hot leads from SMS and dialer tools pushed into GHL with Zapier","Pipeline: New → Contacted → Offer made → Under contract → Closed","Stage triggers create tasks and send follow-up texts","Under contract sends the PandaDoc contract through Zapier"],
+   tools:["GoHighLevel","Zapier","PandaDoc","SMS tools"],
+   outcome:"Clear pipeline, automatic follow-up, and contracts sent on time.",
+   flow:[["t","Zapier","Hot lead from SMS / dialer"],["a","GHL pipeline","New → Contacted → Offer"],["a","GHL workflow","Tasks + follow-up texts per stage"],["a","Zapier","Under contract → PandaDoc"],["r","Closed","Drive folder + team notified"]]},
+
+  {cat:"GoHighLevel", kind:"Sample build", title:"GoHighLevel lead-to-booking system for any business",
+   who:"Home services, clinics, coaches, local businesses",
+   problem:"Leads came from ads, forms and calls, and many never got a reply or a booking.",
+   built:["Meta forms, website forms and missed calls all start one workflow","Opportunity created and assigned by round robin","Instant SMS + email, then a 7-day follow-up sequence","Bookings get reminders; no-replies go to long-term nurture; finished jobs get a review request"],
+   tools:["GoHighLevel","Meta Lead Ads","Calendars","Reputation management"],
+   outcome:"Faster replies, more bookings and more reviews, from one system.",
+   flow:[["t","Meta · form · missed call","New lead"],["a","GHL","Opportunity + round robin"],["a","GHL workflow","Instant SMS + email, 7-day sequence"],
+     {branch:[{label:"Booked",steps:[["a","GHL","Reminders 24h + 1h"]]},{label:"No reply",steps:[["a","GHL","Long-term nurture"]]}]},
+     ["r","After the job","Review request sent"]]},
+
+  /* ---------- Real estate ---------- */
+  {cat:"Follow Up Boss", kind:"Sample build", title:"Zillow and Realtor.com leads auto-tagged and assigned in FUB",
+   who:"Real estate agents & teams",
+   problem:"Portal leads arrived without consistent tags, so the wrong agent often got the lead.",
+   built:["Native portal integrations send leads straight into Follow Up Boss","Lead flow rules tag each lead by source, price range and area","Leads are assigned to the right agent or team by those rules","Source-specific action plans start automatically"],
+   tools:["Zillow","Realtor.com","Follow Up Boss"],
+   outcome:"Each portal lead goes to the right agent with the right follow-up plan.",
+   flow:[["t","Zillow / Realtor.com","New inquiry"],["a","FUB lead flow","Tag source, price, area"],["f","Rules","Which agent covers this?"],["a","FUB","Assign agent"],["r","Action plan","Source-specific follow-up starts"]]},
+
+  {cat:"Follow Up Boss", kind:"Sample build", title:"Speed-to-lead alert with automatic re-assignment",
+   who:"Real estate teams",
+   problem:"Some new leads waited too long for a first call, and managers only found out later.",
+   built:["New lead starts a 5-minute timer","Zapier checks FUB for a logged call or text","No contact: lead is re-assigned to the next agent","Manager gets a Slack alert with the lead link"],
+   tools:["Follow Up Boss","Zapier","Slack"],
+   outcome:"No new lead waits more than a few minutes for a first contact.",
+   flow:[["t","FUB","New lead assigned"],["a","Zapier","Delay 5 minutes"],["f","Zapier","Call or text logged?"],
+     {branch:[{label:"Yes",steps:[["r","Done","No action needed"]]},{label:"No",steps:[["a","FUB","Re-assign to next agent"]]}]},
+     ["r","Slack","Manager alerted"]]},
+
+  {cat:"Zapier", kind:"Sample build", title:"Skip-traced list import to dialer and SMS tool",
+   who:"Real estate investors & wholesalers",
+   problem:"Skip-traced lists were cleaned and uploaded by hand to several tools before every campaign.",
+   built:["New rows in Google Sheets start the Zap","Formatter cleans phone numbers and names","Duplicates and existing CRM contacts are skipped","Clean records are pushed to the dialer and SMS tool lists"],
+   tools:["Google Sheets","Zapier","Cold-calling dialer","Smarter Contact"],
+   outcome:"Campaign lists are ready in minutes instead of hours of CSV work.",
+   flow:[["t","Google Sheets","New skip-traced rows"],["a","Zapier Formatter","Clean phones + names"],["f","Zapier","Duplicate or existing contact?"],["a","Dialer","Add to calling list"],["r","SMS tool","Add to text campaign"]]},
+
+  {cat:"Follow Up Boss", kind:"Sample build", title:"Buyer nurture: new matching listings sent automatically",
+   who:"Buyer agents",
+   problem:"Agents forgot to send new listings to buyers who were still searching.",
+   built:["Buyer criteria stored in FUB custom fields","New matching listing triggers the Zap","Personal text and email sent with the listing link","Buyer reply moves the lead to Hot and creates a call task"],
+   tools:["Follow Up Boss","Zapier","Listing feed"],
+   outcome:"Buyers stay engaged, and agents call when interest is high.",
+   flow:[["t","Listing feed","New matching listing"],["a","FUB","Find buyers with matching criteria"],["a","FUB","Send text + email with link"],["t","Buyer","Replies"],["r","FUB","Stage Hot + call task"]]},
+
+  {cat:"Zapier", kind:"Sample build", title:"Lender handoff with status updates back to the agent",
+   who:"Agents & lending partners",
+   problem:"Buyers who needed pre-approval were passed to lenders by email, and agents never saw the status.",
+   built:["FUB tag \"Needs pre-approval\" starts the Zap","Lead is created in the lender's CRM with notes","Lender status changes are sent back as FUB notes","Agent is notified when the buyer is pre-approved"],
+   tools:["Follow Up Boss","Zapier","Lender CRM"],
+   outcome:"Agent and lender work from the same up-to-date information.",
+   flow:[["t","FUB","Tag \"Needs pre-approval\""],["a","Zapier","Create lead in lender CRM"],["t","Lender CRM","Status changed"],["a","FUB","Add status note"],["r","Agent","Notified: pre-approved"]]},
+
+  /* ---------- Zapier / Make.com ---------- */
+  {cat:"Make.com", kind:"Sample build", title:"Multi-step lead routing scenario in Make.com",
+   who:"Sales teams",
+   problem:"Lead routing needed many conditions that were expensive and hard to manage as separate Zaps.",
+   built:["Webhook receives leads from all forms","Router splits leads by service, location and budget","Each route creates the lead in the CRM with the right owner","Error handler retries and logs failed records"],
+   tools:["Make.com","Webhooks","CRM","Google Sheets"],
+   outcome:"One scenario handles all routing rules, with clear error handling.",
+   flow:[["t","Webhook","New lead"],["f","Router","Service · location · budget"],
+     {branch:[{label:"Route A",steps:[["a","CRM","Owner: Team A"]]},{label:"Route B",steps:[["a","CRM","Owner: Team B"]]}]},
+     ["r","Error handler","Retry + log failures"]]},
+
+  {cat:"Zapier", kind:"Sample build", title:"Calendly booking → CRM stage, reminders and no-show follow-up",
+   who:"Any business that books calls",
+   problem:"Bookings didn't update the pipeline, and no-shows were never followed up.",
+   built:["Calendly booking moves the CRM opportunity to Booked","Reminder texts are scheduled before the meeting","No-show triggers a reschedule text and a task","Cancelled meetings return the lead to follow-up"],
+   tools:["Calendly","Zapier","GoHighLevel","Follow Up Boss","Twilio"],
+   outcome:"Accurate pipeline stages and fewer lost no-shows.",
+   flow:[["t","Calendly","Meeting booked"],["a","CRM","Stage → Booked"],["a","Twilio","Reminder texts"],
+     {branch:[{label:"Attended",steps:[["a","CRM","Stage → Met"]]},{label:"No-show",steps:[["a","CRM","Reschedule text + task"]]}]},
+     ["r","Result","Pipeline always up to date"]]},
+
+  {cat:"Zapier", kind:"Sample build", title:"Google Drive folders created for every new deal",
+   who:"Real estate & service teams",
+   problem:"Staff created deal folders by hand, with different names and structures.",
+   built:["New deal in the CRM starts the Zap","Main folder created with a standard name (address or client)","Sub-folders for contracts, photos and documents","Folder link saved back to the CRM and shared with the team"],
+   tools:["Zapier","Google Drive","Follow Up Boss","Pipedrive"],
+   outcome:"Every deal has the same organized folder, linked from the CRM.",
+   flow:[["t","CRM","New deal created"],["a","Google Drive","Create main folder"],["a","Google Drive","Create sub-folders"],["a","CRM","Save folder link"],["r","Team","Folder shared"]]},
+
+  {cat:"Zapier", kind:"Sample build", title:"Typeform survey lead scoring → HubSpot",
+   who:"B2B and service companies",
+   problem:"All form leads were treated the same, so sales spent time on low-fit leads.",
+   built:["Typeform answers start the Zap","Score calculated from budget, timeline and company size","High scores create a HubSpot deal and assign a rep","Low scores join an email nurture sequence"],
+   tools:["Typeform","Zapier","HubSpot"],
+   outcome:"Sales focuses on the best-fit leads first.",
+   flow:[["t","Typeform","Survey submitted"],["a","Zapier","Calculate lead score"],
+     {branch:[{label:"High score",steps:[["a","HubSpot","Deal + assign rep"]]},{label:"Low score",steps:[["a","HubSpot","Nurture sequence"]]}]},
+     ["r","Result","Reps call best leads first"]]},
+
+  {cat:"Make.com", kind:"Sample build", title:"CRM migration with field mapping and cleanup",
+   who:"Businesses switching CRMs",
+   problem:"Moving years of contacts, tags and notes between CRMs risked lost and duplicated data.",
+   built:["Exported old CRM data and mapped every field to the new CRM","Cleaned phones, emails and tags before import","Imported contacts, then notes and history through the API","Checked record counts and spot-checked samples after import"],
+   tools:["Make.com","Zapier","REST APIs","CSV","Google Sheets"],
+   outcome:"A clean move to the new CRM with history kept.",
+   flow:[["t","Old CRM","Export contacts + notes"],["a","Google Sheets","Map + clean fields"],["f","Check","Duplicates removed"],["a","Make.com","Import through API"],["r","New CRM","Counts verified"]]},
+
+  /* ---------- n8n & AI ---------- */
+  {cat:"AI agents", kind:"Sample build", title:"AI call summary saved to the CRM",
+   who:"Sales & acquisition teams",
+   problem:"Reps wrote call notes from memory, and important details were missed.",
+   built:["Call recording or transcript is sent to n8n","AI summarizes the call, extracts key facts and the next step","Summary is saved as a CRM note","Next step becomes a dated task"],
+   tools:["n8n","OpenAI","Claude","Follow Up Boss","Dialer"],
+   outcome:"Consistent call notes and clear next steps after every call.",
+   flow:[["t","Dialer","Call ended + recording"],["a","n8n","Get transcript"],["ai","AI","Summary, key facts, next step"],["a","FUB","Save note"],["r","FUB","Next-step task created"]]},
+
+  {cat:"AI agents", kind:"Sample build", title:"AI first-reply drafts for new inquiries",
+   who:"Any business with form leads",
+   problem:"First replies were slow and generic.",
+   built:["Form answers sent to n8n","AI writes a personal reply in the company's tone","Rep approves in Slack, or it sends automatically for simple cases","Reply logged in the CRM"],
+   tools:["n8n","Claude","OpenAI","Slack","CRM"],
+   outcome:"Fast, personal first replies without writing each one.",
+   flow:[["t","Website form","New inquiry"],["ai","AI","Draft personal reply"],["f","Approval","Simple case?"],
+     {branch:[{label:"Yes",steps:[["a","Email / SMS","Send automatically"]]},{label:"No",steps:[["a","Slack","Rep approves draft"]]}]},
+     ["r","CRM","Reply logged"]]},
+
+  {cat:"n8n", kind:"Sample build", title:"Property data lookup added to every lead",
+   who:"Real estate investors",
+   problem:"Acquisition reps looked up property details by hand before every call.",
+   built:["New lead with an address triggers n8n","HTTP request calls a property data API","JSON response mapped to CRM custom fields","Rep sees property details before calling"],
+   tools:["n8n","REST API","JSON","Follow Up Boss"],
+   outcome:"Reps start every call with the property facts in front of them.",
+   flow:[["t","CRM","New lead with address"],["a","n8n HTTP","Property data API"],["a","n8n","Map JSON to fields"],["r","CRM","Property details on lead"]]},
+
+  {cat:"n8n", kind:"Sample build", title:"Workflow health monitor for Zapier and n8n",
+   who:"Teams running many automations",
+   problem:"Failed automations were noticed days later, after leads were already lost.",
+   built:["n8n checks for failed Zapier and n8n runs every hour","Groups errors by workflow and step","Posts a Slack alert with the error and a link","Logs incidents to Google Sheets"],
+   tools:["n8n","Zapier","Slack","Google Sheets"],
+   outcome:"Problems are found and fixed within the hour.",
+   flow:[["t","n8n Schedule","Every hour"],["a","n8n","Check failed runs"],["f","Errors found?","Group by workflow"],["a","Slack","Alert with details"],["r","Google Sheets","Incident logged"]]},
+
+  /* ---------- GoHighLevel ---------- */
+  {cat:"GoHighLevel", kind:"Sample build", title:"GoHighLevel snapshot for fast client launches",
+   who:"Marketing agencies",
+   problem:"Every new client account was built from scratch.",
+   built:["Built a full sub-account: pipelines, workflows, calendars, forms, templates","Saved it as a snapshot","New client: load snapshot, set custom values, connect phone and email","Account ready to use the same day"],
+   tools:["GoHighLevel","Snapshots","Custom values"],
+   outcome:"New client accounts launch in a fraction of the time, all set up the same way.",
+   flow:[["t","Agency","New client signed"],["a","GHL","Load snapshot"],["a","GHL","Set custom values"],["a","GHL","Connect phone + email"],["r","Client","Account live"]]},
+
+  {cat:"GoHighLevel", kind:"Sample build", title:"Missed-call text back and review requests",
+   who:"Local businesses",
+   problem:"Missed calls became lost customers, and happy customers rarely left reviews.",
+   built:["Missed call triggers an instant text","Reply creates a contact and opportunity","Finished job triggers a review request","Unhappy replies alert the owner instead of asking for a review"],
+   tools:["GoHighLevel","Reputation management"],
+   outcome:"Fewer lost callers and more online reviews.",
+   flow:[["t","Phone","Missed call"],["a","GHL","Instant text back"],["a","GHL","Contact + opportunity"],["t","GHL","Job completed"],["r","GHL","Review request sent"]]},
+
+  {cat:"GoHighLevel", kind:"Sample build", title:"Database reactivation campaign",
+   who:"Any business with old leads",
+   problem:"Thousands of old leads sat in the CRM with no follow-up.",
+   built:["Smart list of leads with no activity in 90+ days","Text campaign with a simple offer or question","AI bot handles replies and qualifies interest","Interested leads go back into the pipeline with a task"],
+   tools:["GoHighLevel","Conversation AI","SMS"],
+   outcome:"Old leads turn into new conversations and appointments.",
+   flow:[["t","GHL","Leads inactive 90+ days"],["a","GHL","Reactivation text"],["ai","GHL AI bot","Handles replies"],["f","Interested?","Qualify"],["r","Pipeline","Back in pipeline + task"]]},
+
+  /* ---------- Voice AI ---------- */
+  {cat:"Voice AI", kind:"Sample build", title:"VAPI outbound voice agent that qualifies and books leads",
+   who:"Real estate investors, agents and service businesses",
+   problem:"New leads went cold because the team couldn't call every lead within minutes.",
+   built:["New CRM lead starts an n8n workflow that places a VAPI outbound call","Voice agent asks qualifying questions with a tuned prompt","Function calls check the calendar and book during the call","End-of-call webhook sends transcript and summary back to the CRM"],
+   tools:["VAPI","n8n","OpenAI","Twilio","Follow Up Boss / GoHighLevel"],
+   outcome:"Every new lead gets a call within minutes, and reps receive qualified appointments with notes.",
+   flow:[["t","CRM","New lead created"],["a","n8n","Start VAPI outbound call"],["ai","VAPI voice agent","Qualifying conversation"],
+     {branch:[{label:"Qualified",steps:[["a","Calendar","Book on the call"]]},{label:"Not now",steps:[["a","CRM","Nurture + callback task"]]}]},
+     ["r","Webhook → CRM","Transcript + summary saved"]]},
+
+  {cat:"Voice AI", kind:"Sample build", title:"Retell AI receptionist for inbound calls",
+   who:"Clinics, home services, real estate offices, local businesses",
+   problem:"After-hours and busy-time calls went to voicemail, and many callers never called back.",
+   built:["Business number connected to a Retell AI agent","Agent answers FAQs from the business's own information","Books appointments, creates callbacks, or transfers urgent calls to a person","Post-call webhook to n8n logs the call and summary in the CRM"],
+   tools:["Retell AI","n8n","Twilio","GoHighLevel","Slack"],
+   outcome:"Every call is answered, logged and followed up, 24/7.",
+   flow:[["t","Phone","Inbound call"],["ai","Retell AI agent","Greets, answers FAQs"],["f","Intent","What does the caller need?"],
+     {branch:[{label:"Book",steps:[["a","Calendar","Appointment booked"]]},{label:"Urgent",steps:[["a","Phone","Transfer to a person"]]},{label:"Question",steps:[["a","CRM","Callback task"]]}]},
+     ["r","n8n → CRM","Call + summary logged"]]},
+
+  {cat:"Voice AI", kind:"Sample build", title:"Appointment confirmation and no-show recovery calls",
+   who:"Clinics, real estate teams, service businesses",
+   problem:"No-shows wasted calendar time, and staff had no time to call everyone the day before.",
+   built:["Day before each appointment, n8n starts a VAPI or Retell call","Agent confirms, reschedules or cancels in a natural conversation","Calendar and CRM updated based on the answer","No-shows get an automatic call to rebook"],
+   tools:["VAPI","Retell AI","n8n","Calendar","GoHighLevel"],
+   outcome:"Higher show rates and a calendar that stays accurate.",
+   flow:[["t","n8n Schedule","Day before appointment"],["ai","Voice agent","Confirm or reschedule"],
+     {branch:[{label:"Confirmed",steps:[["a","CRM","Mark confirmed"]]},{label:"Reschedule",steps:[["a","Calendar","Move appointment"]]}]},
+     ["t","Calendar","No-show"],["r","Voice agent","Rebooking call"]]},
+];
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const chain = arr => `<div class="chain">${arr.map((s,i)=>`${i?'<em>→</em>':''}<span${i===0?' class="t"':''}>${esc(s)}</span>`).join('')}</div>`;
+
+const SOURCES = {
+  "Ads":["Meta Lead Ads","Instagram","Google Ads","LinkedIn Lead Gen","TikTok Lead Ads"],
+  "Real estate":["Zillow","Realtor.com","Smarter Contact","Launch Control","Cold-calling dialers","Carrot websites","Skip-traced lists"],
+  "Websites & forms":["WordPress / Elementor","Webflow","Typeform","JotForm","Gravity Forms","Google Forms","Unbounce","ClickFunnels"],
+  "Calls & messages":["CallRail","Twilio SMS","WhatsApp","Facebook Messenger","Instagram DMs","Missed calls"],
+  "Bookings & more":["Calendly","Webinars & events","Thumbtack","Angi","Yelp","Shopify","Lead notification emails","Referral partners","Google Sheets / CSV"],
+};
+document.getElementById('src-grid').innerHTML = Object.entries(SOURCES).map(([g,l]) =>
+  `<div class="src-group"><p class="lbl">${esc(g)}</p><div class="chips">${l.map(s=>`<span>${esc(s)}</span>`).join('')}</div></div>`).join('');
+document.getElementById('src-count').textContent = Object.values(SOURCES).flat().length + ' sources';
 
 const zapBox = document.getElementById('zaps'), zf = document.getElementById('zap-filters');
 const cats = ["All", ...new Set(ZAPS.map(z => z.cat))];
@@ -574,6 +1051,32 @@ function renderZaps(cat){
 zf.innerHTML = cats.map(c => `<button type="button" id="zf-${c.replace(/\W/g,'')}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
 zf.addEventListener('click', e => { const b = e.target.closest('button'); if (b) renderZaps(b.dataset.cat); });
 renderZaps("All");
+
+const stepHTML = s => s.branch
+  ? `<div class="branch" style="--n:${s.branch.length}">${s.branch.map(b=>`<div class="bcol"><span class="blabel">${esc(b.label)}</span>${b.steps.map(x=>node(x)).join('<div class="conn"></div>')}</div>`).join('')}</div>`
+  : node(s);
+const node = ([k,app,text]) => `<div class="st ${k}"><b>${esc(app)}</b><span>${esc(text)}</span></div>`;
+const projBox = document.getElementById('proj-list'), pf = document.getElementById('proj-filters');
+const pcats = ["All", ...new Set(PROJECTS.map(p => p.cat))];
+function renderProjects(cat){
+  projBox.innerHTML = PROJECTS.filter(p => cat==="All" || p.cat===cat).map(p => `
+  <article class="pcard">
+    <div class="pinfo">
+      <div class="pmeta"><span class="eyebrow" style="color:var(--trigger)">${esc(p.cat)}</span><span class="kind ${p.kind==='Sample build'?'sample':''}">${esc(p.kind)}</span></div>
+      <h3>${esc(p.title)}</h3>
+      <p class="pwho">${esc(p.who)}</p>
+      <div><p class="lbl">Problem</p><p>${esc(p.problem)}</p></div>
+      <div><p class="lbl">What I built</p><ul>${p.built.map(b=>`<li>${esc(b)}</li>`).join('')}</ul></div>
+      <div><p class="lbl">Outcome</p><p class="outcome">${esc(p.outcome)}</p></div>
+      <ul class="tags">${p.tools.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>
+    </div>
+    <div class="dia" aria-label="Workflow diagram">${p.flow.map(stepHTML).join('<div class="conn"></div>')}</div>
+  </article>`).join('');
+  [...pf.children].forEach(b => b.setAttribute('aria-pressed', b.dataset.cat===cat));
+}
+pf.innerHTML = pcats.map(c => `<button type="button" id="pf-${c.replace(/\W/g,'')}" data-cat="${esc(c)}">${esc(c)} <small>${c==='All'?PROJECTS.length:PROJECTS.filter(p=>p.cat===c).length}</small></button>`).join('');
+pf.addEventListener('click', e => { const b = e.target.closest('button'); if (b) renderProjects(b.dataset.cat); });
+renderProjects("All");
 
 document.getElementById('n8n-list').innerHTML = N8N.map(n =>
   `<article class="recipe"><h3>${esc(n.title)}</h3>${chain(n.chain)}<p>${esc(n.desc)}</p></article>`).join('');
